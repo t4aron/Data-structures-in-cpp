@@ -21,3 +21,11 @@
 // if v -> d > u -> d + cost(u, v) then                               (jos hinta v:hen u:n kautta on entista halvempi...)
 //      v -> d > u -> d = cost(u, v)                                  (... paivita hinta)
 //      v -> pi := u                                                  (... ja se, etta tultiin u:sta)
+
+// Djikstran toteutus edellyttaa minimi-prioriteettijonon
+// STL:ssa on valmiiksi std::priority_queue maksimiprioriteettijono
+// Tallennetaan prioriteetiksi -d tai mukautetaan prioriteettijonoa
+
+// Lisaksi prioriteettia on pystyttava paivittamaan
+// std::priority_queue ei tarjoa tata, lisaa solmu aina uudelleen
+// tai kayta jotain muuta prioriteettijonoa (esim. std::set<std::pair<int, Node*>>)
