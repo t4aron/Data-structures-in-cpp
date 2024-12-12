@@ -26,6 +26,73 @@
 // STL:ssa on valmiiksi std::priority_queue maksimiprioriteettijono
 // Tallennetaan prioriteetiksi -d tai mukautetaan prioriteettijonoa
 
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <climits>
+
+using namespace std;
+
+// Define the graph as an adjacency list
+typedef pair<int, int> pii; // {weight, node}
+
+void dijkstra(int start, const vector<vector<pii>>& graph) {
+    int n = graph.size();
+    vector<int> dist(n, INT_MAX); // Distance to each node, initialized to "infinity"
+    priority_queue<pii> pq;       // Priority queue to store { -distance, node }
+
+    // Start with the source node
+    dist[start] = 0;
+    pq.push({0, start}); // Push { -distance, node }
+
+    while (!pq.empty()) {
+        auto [neg_d, u] = pq.top();
+        pq.pop();
+        int d = -neg_d; // Convert back to positive distance
+
+        // If this distance is not the current shortest distance, skip it
+        if (d > dist[u]) continue;
+
+        // Traverse all neighbors
+        for (auto [weight, v] : graph[u]) {
+            int new_dist = d + weight;
+
+            // If a shorter path to v is found
+            if (new_dist < dist[v]) {
+                dist[v] = new_dist;
+                pq.push({-new_dist, v}); // Push with negative distance for min-heap
+            }
+        }
+    }
+
+    // Print shortest distances
+    for (int i = 0; i < n; ++i) {
+        if (dist[i] == INT_MAX) {
+            cout << "Node " << i << ": Unreachable\n";
+        } else {
+            cout << "Node " << i << ": " << dist[i] << '\n';
+        }
+    }
+}
+
+int main() {
+    int n = 5; // Number of nodes
+    vector<vector<pii>> graph(n);
+
+    // Add edges: {weight, destination}
+    graph[0].push_back({1, 1});
+    graph[0].push_back({4, 2});
+    graph[1].push_back({2, 2});
+    graph[1].push_back({6, 3});
+    graph[2].push_back({3, 3});
+    graph[3].push_back({1, 4});
+
+    int start = 0; // Source node
+    dijkstra(start, graph);
+
+    return 0;
+}
+
 // Lisaksi prioriteettia on pystyttava paivittamaan
 // std::priority_queue ei tarjoa tata, lisaa solmu aina uudelleen
 // tai kayta jotain muuta prioriteettijonoa (esim. std::set<std::pair<int, Node*>>)
