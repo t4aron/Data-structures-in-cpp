@@ -9,7 +9,7 @@
 // while Q =/= empty do                                               (kunnes muistilista on tyhja)
 //      u := Extract-min(Q)                                           (halvin alkio listasta)
 //      for v in u -> Adj do                                          (kay lapi solmun naapurit)
-//          Relax(u, v, g)                                            (laske tai korjaa hinta)
+//          Relax-A*(u, v, g)                                            (laske tai korjaa hinta)
 //          if v -> colour = white then                               (jos uusi solmu... )
 //              v -> colour := gray                                   (... se on nyt kesken)
 //              Push(Q, v, v -> de)                                   (... ja laitetaan se jonoon)
@@ -17,7 +17,7 @@
 //              ▷ Jos hinta pieni korjaa prioriteetti Q:ssa!
 //      u -> colour := black                                          (nyt s on loppuun kasitelty)
 
-// Relax(u, v)                                                        (laske/korjaa hinta + arvio u:n kautta solmuun v)
+// Relax-A*(u, v)                                                        (laske/korjaa hinta + arvio u:n kautta solmuun v)
 // if v -> d > u -> d + cost(u, v) then                               (jos hinta v:hen u:n kautta on entista halvempi...)
 //      v -> d > u -> d = cost(u, v)                                  (... paivita hinta)
 //      v -> de := v -> d + min-est(v, g)                             (... päivitä minimi arvio kokonaishinnasta)
