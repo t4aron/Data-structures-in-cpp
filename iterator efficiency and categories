@@ -20,3 +20,6 @@ Eteenpain-iteraattori [forward iterator] (forward_list)
 
 Hajasaanti-iteraattori [random access iterator] (vector, deque, array)
 +=, -=, +, -, <, >, <=, =>, []
+
+Jotkin geneeriset algoritmit vaativat hajasaanti-iteraattoreita
+Esim. sort(i1, i2) toimii siis vain (vector, deque, array) tietorakenteissa

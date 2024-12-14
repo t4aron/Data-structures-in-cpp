@@ -1,0 +1,80 @@
+C++-ohjelmoinnissa mitätöityminen (invalidation) tapahtuu, kun tietorakenteen tila muuttuu niin, 
+että aiemmin viittaavat osoittimet, viitteet tai iteraattorit eivät enää ole kelvollisia. 
+Tämä voi johtaa odottamattomiin virheisiin, jos näitä vanhentuneita viittauksia käytetään.
+
+Syitä mitätöitymiseen C++:ssa:
+1. Kokoelman muokkaaminen (esim. std::vector, std::deque)
+
+Elementtien lisääminen:
+Kun dynaaminen kokoelma (kuten std::vector) kasvaa yli nykyisen kapasiteettinsa, 
+sen elementit kopioidaan uuteen, suurempaan muistialueeseen. Tämä mitätöi kaikki aiemmat osoittimet, 
+viitteet ja iteraattorit.
+
+std::vector<int> v = {1, 2, 3};
+auto it = v.begin();
+v.push_back(4); // Mitätöi iteraattorin "it"
+
+Elementtien poistaminen:
+Elementin poistaminen voi siirtää muita elementtejä uudelleen muistissa. 
+Tämä mitätöi osoittimet ja iteraattorit.
+
+std::vector<int> v = {1, 2, 3};
+auto it = v.begin();
+v.erase(it); // Mitätöi kaikki "it":n viittaukset
+
+2. Tietorakenteen tuhoaminen
+Kun tietorakenne tuhotaan (esim. poistuu näkyvyysalueelta tai vapautetaan delete-operaatiolla), 
+kaikki siihen viittaavat osoittimet ja viitteet mitätöityvät.
+
+int* ptr = new int(5);
+delete ptr; // ptr osoittaa nyt mitätöityyn muistialueeseen
+
+3. Tietorakenteen vaihtaminen (std::swap)
+Tietorakenteiden sisällön vaihtaminen voi muuttaa niiden sisäistä muistia, 
+mitätöiden kaikki osoittimet, viitteet ja iteraattorit.
+
+std::vector<int> v1 = {1, 2, 3};
+std::vector<int> v2 = {4, 5, 6};
+auto it = v1.begin();
+std::swap(v1, v2); // Mitätöi "it"
+
+4. Muistin uudelleenallokointi
+Dynaamisesti allokoidun muistialueen muuttaminen voi johtaa mitätöitymiseen. 
+Esimerkiksi, jos std::vector varaa lisää muistia, sen osoittimet muuttuvat kelvottomiksi.
+5. Äärettömän elinkaaren (dangling) osoittimet ja viitteet
+Osoitin tai viite viittaa objektin muistialueeseen, 
+joka on vapautettu tai jonka elinkaari on päättynyt.
+
+int* ptr;
+{
+    int x = 42;
+    ptr = &x; // "ptr" mitätöityy lohkon päättyessä
+}
+
+6. Tietorakenteen sisäinen muutos
+Joissain tietorakenteissa, kuten std::map tai std::set, 
+elementtien lisääminen tai poistaminen ei yleensä mitätöi iteraattoreita, 
+mutta viitteet tai osoittimet lisättyihin/poistettuihin elementteihin voivat mitätöityä.
+
+Mitätöityminen (englanniksi invalidation) tarkoittaa prosessia, 
+jossa jokin aiemmin kelvolliseksi katsottu tila, 
+data tai välimuisti muuttuu epäkelvoksi ja vaatii uudelleenlaskennan, 
+päivityksen tai uuden latauksen.
+
+Esimerkkejä:
+
+Välimuistin mitätöityminen: Välimuisti merkitään vanhentuneeksi, 
+koska sen sisältämä tieto ei enää ole ajankohtaista.
+
+Esimerkiksi web-sivulla CSS-tiedosto päivitetään, 
+jolloin selain mitätöi vanhan version välimuistista ja lataa uuden.
+Graafisen käyttöliittymän (UI) mitätöityminen: 
+Muutos datassa voi mitätöidä näkymän, jolloin käyttöliittymä on päivitettävä.
+
+Esimerkiksi React-komponentti päivittyy, kun sen state muuttuu.
+Tilan mitätöityminen peliohjelmoinnissa: 
+Pelimoottori saattaa mitätöidä tietyn objektin sijainnin tai törmäyksen laskennat, 
+jos sen tila muuttuu (esim. objektin siirtyessä uuteen sijaintiin).
+
+Yhteistä kaikille on, että mitätöityminen pakottaa jonkin osan järjestelmää päivittämään itsensä, 
+koska vanha tieto ei enää päde.
