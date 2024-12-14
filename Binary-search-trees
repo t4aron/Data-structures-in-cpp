@@ -1,0 +1,5 @@
+Binaarihakupuut
+STL:ssa map ja set rakenteet ovat binaarihakupuita, 
+tarkemmin ottaen tasapainoitettuja binaarihakupuita.
+
+Joka solmun vasemman alipuun alkiot solmua pienempia, oikean suurempia.
