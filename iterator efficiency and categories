@@ -1,0 +1,22 @@
+Iteraattorien operaatior ovat vakioaikaisia O(1)
+
+Sailiosta riippuu, mita operaatioita iteraattori tukee
+
+Iteraattorikategoriat: Mita operaatioita tuetaan
+
+Algoritmit voivat vaatia tietyn kategorian iteraattoreita
+
+Lukuiteraattori [input iterator]
+*luku, ++, ==, !=, =, ->
+
+Kirjoitusiteraattori [output iterator]
+*kirjoitus, ++, ==, !=, =, ->
+
+Eteenpain-iteraattori [forward iterator] (forward_list)
+*(luku ja kirjoitus)
+
+2-suuntainen iteraattori [bidirectional iterator] (list) (unordered_)(multi) map/set
+--
+
+Hajasaanti-iteraattori [random access iterator] (vector, deque, array)
++=, -=, +, -, <, >, <=, =>, []
