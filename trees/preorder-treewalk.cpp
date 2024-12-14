@@ -1,16 +1,16 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
 // Define the structure for a tree node
 struct TreeNode {
     int value;
-    TreeNode* left;
-    TreeNode* right;
+    vector<TreeNode*> children;  // A node can have multiple children
 
-    TreeNode(int val) : value(val), left(nullptr), right(nullptr) {}
+    TreeNode(int val) : value(val) {}
 };
 
-// Preorder traversal function (root -> left -> right)
+// Preorder traversal (root -> children)
 void preorderTraversal(TreeNode* root) {
     if (root == nullptr) {
         return;
@@ -19,9 +19,8 @@ void preorderTraversal(TreeNode* root) {
     // Visit the root
     cout << root->value << " ";
 
-    // Traverse the left subtree
-    preorderTraversal(root->left);
-
-    // Traverse the right subtree
-    preorderTraversal(root->right);
+    // Traverse each child
+    for (TreeNode* child : root->children) {
+        preorderTraversal(child);
+    }
 }

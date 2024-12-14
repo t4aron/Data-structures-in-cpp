@@ -1,27 +1,26 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
 // Define the structure for a tree node
 struct TreeNode {
     int value;
-    TreeNode* left;
-    TreeNode* right;
+    vector<TreeNode*> children;  // A node can have multiple children
 
-    TreeNode(int val) : value(val), left(nullptr), right(nullptr) {}
+    TreeNode(int val) : value(val) {}
 };
 
-// Postorder traversal function (left -> right -> root)
+// Postorder traversal (children -> root)
 void postorderTraversal(TreeNode* root) {
     if (root == nullptr) {
         return;
     }
 
-    // Traverse the left subtree
-    postorderTraversal(root->left);
+    // Traverse each child
+    for (TreeNode* child : root->children) {
+        postorderTraversal(child);
+    }
 
-    // Traverse the right subtree
-    postorderTraversal(root->right);
-
-    // Visit the root
+    // Visit the root after its children
     cout << root->value << " ";
 }
